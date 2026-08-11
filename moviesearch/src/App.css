@@ -1,0 +1,113 @@
+/* App background */
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(
+    135deg,
+    #0f172a,
+    #1e293b,
+    #111827
+  );
+  color: white;
+}
+
+
+/* Main app wrapper */
+.app-container {
+  min-height: 100vh;
+}
+
+
+/* Title styling */
+.app-title {
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  background: linear-gradient(
+    90deg,
+    #ffffff,
+    #9ca3af
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+
+/* Subtitle */
+.app-subtitle {
+  color: #d1d5db;
+  max-width: 600px;
+}
+
+
+/* Tabs */
+.app-tabs {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
+  padding: 6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+
+/* Search container */
+.search-container {
+  background: rgba(255,255,255,0.06);
+  padding: 1rem;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+
+/* Movie cards subtle animation */
+.grid > div {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+
+.grid > div:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+}
+
+
+/* Empty state */
+.empty-state {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: rgba(255,255,255,0.05);
+  border-radius: 16px;
+  color: #d1d5db;
+}
+
+
+/* Smooth page entrance */
+.app-container {
+  animation: fadeIn 0.5s ease;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .app-title {
+    font-size: 2.5rem;
+  }
+
+  .search-container {
+    width: 100%;
+  }
+}
