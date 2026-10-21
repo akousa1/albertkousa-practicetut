@@ -1,0 +1,53 @@
+<div class="table-container" *ngIf="tableData">
+  <h2 class="table-title">{{ title }}</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th *ngFor="let h of headerArray">
+          {{ h.data.name }}
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let row of tableData.rows">
+        <td *ngFor="let h of headerArray">
+
+          <!-- TEXT -->
+          <span *ngIf="h.data.uiType === 'text'">
+            {{ row[h.key] }}
+          </span>
+
+          <!-- INPUT -->
+          <input
+            *ngIf="h.data.uiType === 'input'"
+            [(ngModel)]="row[h.key]"
+            type="text"
+          />
+
+          <!-- DATE TIME -->
+          <input
+            *ngIf="h.data.uiType === 'dateTime'"
+            [(ngModel)]="row[h.key]"
+            type="datetime-local"
+          />
+
+          <!-- DROPDOWN -->
+          <select
+            *ngIf="h.data.uiType === 'dropdown'"
+            [(ngModel)]="row[h.key]"
+          >
+            <option
+              *ngFor="let opt of h.data.options"
+              [value]="opt.value"
+            >
+              {{ opt.displayText }}
+            </option>
+          </select>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
