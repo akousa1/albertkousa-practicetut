@@ -1,23 +1,124 @@
-import logo from './logo.svg';
-import './App.css';
+import { useReducer, useState } from "react";
+import "./App.css";
 
+const loginReducer = (state, action) => {
+  switch (action.type) {
+    case "field":
+      return {
+        ...state,
+        [action.field]: action.value,
+      };
+
+    case "logIn":
+      return {
+        ...state,
+        // username: action.payload.username,
+        // password: action.payload.password,
+        // loggedIn: true,
+        error: "",
+      };
+    case "success":
+      return {
+        ...state,
+        loggedIn: true,
+        password: "",
+      };
+    case "error":
+      return {
+        ...state,
+        error: "Incorrect username or password",
+        loggedIn: false,
+        username: "",
+        password: "",
+      };
+    case "logOut":
+      return {
+        ...state,
+        username: "",
+        password: "",
+        loggedIn: false,
+        error: "",
+      };
+    default:
+      return state;
+  }
+};
 function App() {
+  const [state, dispatch] = useReducer(loginReducer, {
+    username: "",
+    password: "",
+    loggedIn: false,
+    error: "",
+  });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch({ type: "logIn" });
+    try {
+      if (state.username === "Jerry" && state.password === "Tom") {
+        dispatch({ type: "success" });
+      } else {
+        throw Error;
+      }
+    } catch (error) {
+      dispatch({ type: "error" });
+    }
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1 className="text-center text-3xl font-semibold mt-2 py-2">
+        usereducer
+      </h1>
+      <div>
+        {state.loggedIn ? (
+          <>
+            <div>
+              <h2 className="text-center text-3xl mt-4 py-4">
+                Welcome {state.username}!
+              </h2>
+              <button
+                className="bg-blue-600 text-white text-lg 
+        font-medium rounded-lg py-1 px-3"
+                onClick={() => {
+                  dispatch({ type: "logOut" });
+                }}
+              >
+                Log Out
+              </button>
+            </div>
+          </>
+        ) : (
+          <form
+            className="flex flex-col items-center 
+      justify-center gap-4 mt-4 py-4"
+            onSubmit={handleSubmit}
+          >
+            <input
+              className="border rounded-lg px-2 py-1"
+              type="text"
+              autoComplete="username"
+              placeholder="Username"
+              value={state.username}
+              onChange={(e) => dispatch({ type: "logIn", payload: { username: e.target.value } })}
+            />
+            <input
+              className="border rounded-lg px-2 py-1"
+              type="password"
+              autoComplete="current-password"
+              placeholder="Password"
+              value={state.password}
+              onChange={(e) => dispatch({ type: "logIn", payload: { password: e.target.value } })}
+            />
+            <button
+              className="bg-blue-600 text-white text-lg 
+        font-medium rounded-lg py-1 px-3"
+              type="submit"
+            >
+              Login
+            </button>
+            <p className="text-red-500 text-center">{state.error}</p>
+          </form>
+        )}
+      </div>
     </div>
   );
 }
